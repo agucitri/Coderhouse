@@ -27,6 +27,9 @@ JOIN CUSTOMIZATIONS AS cu ON cu.id_custom = od.id_custom
 GROUP BY od.id_order_details, od.id_order
 ORDER BY od.id_order_details ASC;
 
+SELECT * FROM vw_orders_description
+LIMIT 5;
+
 
 -- (2) view customer_orders
 CREATE OR REPLACE VIEW vw_customer_orders AS
@@ -40,6 +43,9 @@ FROM ORDERS AS o
 JOIN CUSTOMERS AS cu ON cu.id_customer = o.id_customer
 GROUP BY cu.id_customer
 ORDER BY COUNT(o.id_order) DESC;
+
+SELECT * FROM vw_customer_orders
+LIMIT 5;
 
 
 -- (3) view branch_incomes_orders
@@ -61,6 +67,9 @@ JOIN BRANCHS AS br ON br.id_branch = o.id_branch
 GROUP BY br.id_branch
 ORDER BY SUM(od.quantity * p.price) DESC;
 
+SELECT * FROM vw_branch_incomes_orders
+LIMIT 5;
+
 
 -- (4) view product_performance
 CREATE OR REPLACE VIEW vw_product_performance AS
@@ -72,12 +81,15 @@ SELECT
     ROUND((SUM(od.quantity * p.price) / 
 		(SELECT SUM(od.quantity * p.price) FROM ORDER_DETAILS od 
 		 JOIN PRODUCTS AS p ON p.id_product = od.id_product)) * 100, 2) AS Perc_incomes_over_total
-	FROM ORDER_DETAILS AS od
-    JOIN PRODUCTS AS p ON p.id_product = od.id_product
-    JOIN PROD_CATEG AS ca ON ca.id_prod_categ = p.id_prod_categ
-    JOIN PROD_COLOUR AS co ON co.id_colour = p.id_colour
-    GROUP BY ca.category, co.colour
-    ORDER BY SUM(od.quantity) DESC;
+FROM ORDER_DETAILS AS od
+JOIN PRODUCTS AS p ON p.id_product = od.id_product
+JOIN PROD_CATEG AS ca ON ca.id_prod_categ = p.id_prod_categ
+JOIN PROD_COLOUR AS co ON co.id_colour = p.id_colour
+GROUP BY ca.category, co.colour
+ORDER BY SUM(od.quantity) DESC;
+
+SELECT * FROM vw_product_performance
+LIMIT 5;
 
 
 -- (5) view customer_gasto_acum
@@ -95,5 +107,8 @@ JOIN CUSTOMERS AS cu ON cu.id_customer = o.id_customer
 JOIN PRODUCTS AS p ON p.id_product = od.id_product
 GROUP BY cu.id_customer
 ORDER BY SUM(od.quantity * p.price) DESC;
+
+SELECT * FROM vw_customer_gasto_acum
+LIMIT 5;
 
 
