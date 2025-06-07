@@ -89,6 +89,18 @@ END
 $$
 DELIMITER ;
 
+select * from customers;
+
+/*
+insertamos una nueva orden para corroborar que ambos SP funcionan como se esperaba
+*/
+START TRANSACTION;
+CALL generate_order(210, NOW(), 3, 1, @new_id_order);
+CALL add_order_detail(@new_id_order, 16, 2, 1);
+CALL add_order_detail(@new_id_order, 37, 1, 3);
+
+ROLLBACK;
+COMMIT;
 
 
 
