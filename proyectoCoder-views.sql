@@ -2,7 +2,7 @@
 USE proyectoCoder;
 
 
--- (1) view orders_description
+-- (1) view vw_orders_description
 CREATE OR REPLACE VIEW vw_orders_description AS
 SELECT
 	od.id_order_details AS Id,
@@ -31,7 +31,7 @@ SELECT * FROM vw_orders_description
 LIMIT 5;
 
 
--- (2) view customer_orders
+-- (2) view vw_customer_orders
 CREATE OR REPLACE VIEW vw_customer_orders AS
 SELECT
 	cu.id_customer AS Id_Customer,
@@ -48,7 +48,7 @@ SELECT * FROM vw_customer_orders
 LIMIT 5;
 
 
--- (3) view branch_incomes_orders
+-- (3) view vw_branch_incomes_orders
 CREATE OR REPLACE VIEW vw_branch_incomes_orders AS
 SELECT
 	br.id_branch AS Id,
@@ -71,7 +71,7 @@ SELECT * FROM vw_branch_incomes_orders
 LIMIT 5;
 
 
--- (4) view product_performance
+-- (4) view vw_product_performance
 CREATE OR REPLACE VIEW vw_product_performance AS
 SELECT
     ca.category AS Category,
@@ -92,7 +92,7 @@ SELECT * FROM vw_product_performance
 LIMIT 5;
 
 
--- (5) view customer_gasto_acum
+-- (5) view vw_customer_gasto_acum
 CREATE OR REPLACE VIEW vw_customer_gasto_acum AS
 SELECT
 	o.id_customer AS Id_Customer,
