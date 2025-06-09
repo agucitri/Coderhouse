@@ -17,7 +17,6 @@ END
 $$
 DELIMITER ;
 
-
 -- insertamos nuevo valor en PROD_SIZE debido a la restriccion de la FK
 INSERT INTO PROD_SIZE (size)
 VALUES
@@ -30,6 +29,7 @@ VALUES
 
 -- comprobamos tabla PROD_INSERTS_AUDIT
 SELECT * FROM PROD_INSERTS_AUDIT;
+
 
 
 -- (2) trigger tr_new_customer
@@ -46,7 +46,6 @@ BEGIN
 END
 $$
 DELIMITER ;
-
 
 -- insertamos un nuevo cliente en CUSTOMERS para accionar el trigger
 INSERT INTO CUSTOMERS (first_name, last_name, birthday, email)
