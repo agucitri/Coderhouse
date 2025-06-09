@@ -2,14 +2,14 @@
 USE proyectoCoder;
 
 
--- (1) store procedure generate_order
-DROP PROCEDURE IF EXISTS generate_order;
+-- (1) store procedure sp_generate_order
+DROP PROCEDURE IF EXISTS sp_generate_order;
 /*
 el SP genera el ingreso de un nuevo pedido u orden, haciendo ROLLBACK si ocurre algun error
 durante al creacion de la orden
 */
 DELIMITER $$
-CREATE PROCEDURE generate_order(
+CREATE PROCEDURE sp_generate_order(
 	IN p_id_customer INT,
     IN p_date DATETIME,
     IN p_id_branch INT,
@@ -44,14 +44,14 @@ $$
 DELIMITER ;
 
 
--- (2) store procedure add_order_detail
-DROP PROCEDURE IF EXISTS add_order_detail;
+-- (2) store procedure sp_add_order_detail
+DROP PROCEDURE IF EXISTS sp_add_order_detail;
 /*
 el SP agrega una linea en la tabla ORDER_DETAILS luego de que se haya insertado
 una nueva orden en ORDERS, insertando una linea por cada producto distinto en la orden
 */
 DELIMITER $$
-CREATE PROCEDURE add_order_detail(
+CREATE PROCEDURE sp_add_order_detail(
 	IN p_id_order INT,
     IN p_id_product INT,
     IN p_quantity INT,
@@ -89,15 +89,14 @@ END
 $$
 DELIMITER ;
 
-select * from customers;
 
 /*
 insertamos una nueva orden para corroborar que ambos SP funcionan como se esperaba
 */
 START TRANSACTION;
-CALL generate_order(210, NOW(), 3, 1, @new_id_order);
-CALL add_order_detail(@new_id_order, 16, 2, 1);
-CALL add_order_detail(@new_id_order, 37, 1, 3);
+CALL sp_generate_order(210, NOW(), 3, 1, @new_id_order);
+CALL sp_add_order_detail(@new_id_order, 16, 2, 1);
+CALL sp_add_order_detail(@new_id_order, 37, 1, 3);
 
 ROLLBACK;
 COMMIT;
